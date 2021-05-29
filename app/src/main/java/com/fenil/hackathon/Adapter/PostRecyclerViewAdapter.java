@@ -1,6 +1,7 @@
 package com.fenil.hackathon.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fenil.hackathon.Callback.PostDiffUtil;
+import com.fenil.hackathon.CommentDialog;
 import com.fenil.hackathon.Model.Post;
 import com.fenil.hackathon.R;
 
@@ -40,15 +42,15 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull PostRecyclerViewHolder holder, int position) {
         String content = posts.get(position).getContent();
-        int commentCount = posts.get(position).getCommentCount();
 
         holder.content.setText(content);
-        holder.commentCount.setText(String.valueOf(commentCount));
 
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Implement comment counter
+                Intent intent = new Intent(context, CommentDialog.class);
+                intent.putExtra("id",posts.get(position).getId());
+                context.startActivity(intent);
             }
         });
 
@@ -61,15 +63,12 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
     public static class PostRecyclerViewHolder extends RecyclerView.ViewHolder{
         TextView content;
-        TextView commentCount;
         ImageButton comment;
 
         public PostRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             content = itemView.findViewById(R.id.post_textview);
-            commentCount = itemView.findViewById(R.id.post_commentCount);
             comment = itemView.findViewById(R.id.post_comment);
-
         }
     }
     public void updateList(ArrayList<Post> newList) {
