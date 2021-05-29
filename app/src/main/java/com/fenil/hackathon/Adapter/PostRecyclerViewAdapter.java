@@ -40,10 +40,8 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull PostRecyclerViewHolder holder, int position) {
         String content = posts.get(position).getContent();
-        int commentCount = posts.get(position).getCommentCount();
 
         holder.content.setText(content);
-        holder.commentCount.setText(String.valueOf(commentCount));
 
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,15 +59,12 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
     public static class PostRecyclerViewHolder extends RecyclerView.ViewHolder{
         TextView content;
-        TextView commentCount;
         ImageButton comment;
 
         public PostRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             content = itemView.findViewById(R.id.post_textview);
-            commentCount = itemView.findViewById(R.id.post_commentCount);
             comment = itemView.findViewById(R.id.post_comment);
-
         }
     }
     public void updateList(ArrayList<Post> newList) {

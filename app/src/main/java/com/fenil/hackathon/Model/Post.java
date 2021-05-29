@@ -1,21 +1,48 @@
 package com.fenil.hackathon.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Post{
     String content;
-    int commentCount;
-    ArrayList<String> comments;
+    String id;
+    String timestamp;
+    List<String> hashtags;
 
     public Post(){
 
     }
 
-    public Post(String content)
+    public Post(String content,String id,String timestamp,List<String> hashtags)
     {
         this.content = content;
-        commentCount = 0;
-        comments = new ArrayList<>();
+        this.id = id;
+        this.timestamp = timestamp;
+        this.hashtags = hashtags;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(List<String> hashtags) {
+        this.hashtags = hashtags;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getContent() {
@@ -26,19 +53,4 @@ public class Post{
         this.content = content;
     }
 
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public ArrayList<String> getComments() {
-        return comments;
-    }
-
-    public void setComments(ArrayList<String> comments) {
-        this.comments = comments;
-    }
 }

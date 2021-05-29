@@ -1,11 +1,14 @@
 package com.fenil.hackathon.Repos;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.fenil.hackathon.MainActivity;
 import com.fenil.hackathon.Model.Post;
 import com.fenil.hackathon.Model.PostsApiResponse;
 import com.fenil.hackathon.Model.PostsFetchRequest;
@@ -29,7 +32,7 @@ public class FetchPostsRepo {
 
         apiInterface = APIClient.getClient().create(ApiInterface.class);
 
-        Call<ArrayList<PostsApiResponse>> call = apiInterface.getAllContestsFromApi(new PostsFetchRequest("2021-05-29T14:06:07.529Z"));
+        Call<ArrayList<PostsApiResponse>> call = apiInterface.getAllContestsFromApi(new PostsFetchRequest(MainActivity.timestamp));
         fetchApiAsyncTask = new FetchApiAsyncTask(call);
 
     }
@@ -68,10 +71,10 @@ public class FetchPostsRepo {
                     assert apiResponse != null;
 
                     ArrayList<Post> postList = new ArrayList<>();
-
+                    Log.v("ApiResponseSize",String.valueOf(apiResponse.size()));
                     for(int i=0 ;i < apiResponse.size();i++)
                     {
-                        postList.add(new Post(apiResponse.get(i).getText()));
+                        postList.add(new Post(apiResponse.get(i).getText(),apiResponse.get(i).getId(),apiResponse.get(i).getTimestamp(),apiResponse.get(i).getHashtags()));
                     }
                     liveContestList.postValue(postList);
                 }
@@ -83,6 +86,7 @@ public class FetchPostsRepo {
             });
             return null;
         }
+
     }
 }
 
