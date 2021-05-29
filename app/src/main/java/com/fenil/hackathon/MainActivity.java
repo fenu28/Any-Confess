@@ -7,14 +7,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.Toast;
 
 import com.fenil.hackathon.Adapter.PostRecyclerViewAdapter;
 import com.fenil.hackathon.Model.Post;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     PostRecyclerViewAdapter postRecyclerViewAdapter;
     ArrayList<Post> posts;
     String androidID;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,getAndroidID(),Toast.LENGTH_SHORT).show();
         posts = new ArrayList<>();
         recyclerView = findViewById(R.id.post_recyclerview);
+        fab = findViewById(R.id.fab_add);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,CreatePost.class);
+                startActivity(intent);
+            }
+        });
 
         Toast.makeText(this,androidID,Toast.LENGTH_SHORT).show();
         Post post = new Post("How to build an Android App?","This article is a beginning of something very exciting. Keep checking out this space for updates and news");
