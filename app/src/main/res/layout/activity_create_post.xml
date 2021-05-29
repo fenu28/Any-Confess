@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CreatePost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="8dp"
+    >
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CreatePost">
+    android:layout_marginTop="32dp"
+    android:layout_marginHorizontal="8dp"
+   >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -17,11 +29,30 @@
             android:id="@+id/content_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:fontFamily="sans-serif-medium"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:hint="Your confession goes here.."
+            android:layout_margin="16dp"
             android:maxLength="512">
         </EditText>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp">
+        <TextView
+            android:id="@+id/remaining_chars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="8sp"
+            android:gravity="center"
+            android:hint="512 remaining"
+            android:layout_margin="8dp">
+        </TextView>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -35,8 +66,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:textSize="24sp"
-            android:hint="Hashtags go here">
+            android:textSize="12sp"
+            android:layout_margin="16dp"
+            android:maxLength="160"
+            android:background="@null"
+            android:hint="Hashtags...">
         </EditText>
     </androidx.cardview.widget.CardView>
 
@@ -50,3 +84,4 @@
     </Button>
 
 </LinearLayout>
+</androidx.cardview.widget.CardView>
