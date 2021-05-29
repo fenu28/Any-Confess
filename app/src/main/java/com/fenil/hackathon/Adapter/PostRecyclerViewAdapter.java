@@ -73,7 +73,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
         }
     }
     public void updateList(ArrayList<Post> newList) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new PostDiffUtil(this.posts, newList));
-        diffResult.dispatchUpdatesTo(this);
+        this.posts = newList;
     }
 }
