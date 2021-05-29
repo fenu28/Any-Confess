@@ -7,21 +7,30 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.harsh.searchwidget.SearchBar
-        android:id="@+id/search_bar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/search_card"
+        android:layout_margin="8dp"
+        android:elevation="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:maxSuggestionsCount="10"
-        app:hint="Search Books"
-        app:placeholder="Search">
-    </com.harsh.searchwidget.SearchBar>
+        android:layout_height="wrap_content">
 
+        <com.harsh.searchwidget.SearchBar
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:maxSuggestionsCount="10"
+            android:layout_margin="8dp"
+            app:hint="Search Books"
+            app:placeholder="Search">
+        </com.harsh.searchwidget.SearchBar>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/post_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_bar"
+        android:layout_below="@id/search_card"
         android:layout_marginTop="8dp">
     </androidx.recyclerview.widget.RecyclerView>
 
