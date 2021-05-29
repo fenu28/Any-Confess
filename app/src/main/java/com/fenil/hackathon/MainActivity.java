@@ -3,6 +3,8 @@ package com.fenil.hackathon;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,14 +14,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.fenil.hackathon.Adapter.PostRecyclerViewAdapter;
 import com.fenil.hackathon.Model.Post;
+import com.fenil.hackathon.ViewModel.ApiViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Post> posts;
     String androidID;
     FloatingActionButton fab;
+
+    ApiViewModel apiViewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(this,androidID,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,androidID,Toast.LENGTH_SHORT).show();
         Post post = new Post("This article is a beginning of something very exciting. Keep checking out this space for updates and news");
 
         for(int i = 1;i<=20;i++)
@@ -69,14 +78,26 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(postRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
+
+        apiViewModel = new ViewModelProvider(this).get(ApiViewModel.class);
+        apiViewModel.init();
+
+        apiViewModel.getAllPosts().observe(this, new Observer<ArrayList<Post>>() {
+            @Override
+            public void onChanged(ArrayList<Post> posts) {
+                postRecyclerViewAdapter.updateList(posts);
+                postRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+
+        apiViewModel.fetchPostsFromApi();
     }
 
     public void saveAndroidID() {
         SharedPreferences sharedPreferences = getSharedPreferences("androidID", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("androidID", Settings.Secure.getString(this.getContentResolver(),
-                Settings.Secure.ANDROID_ID));
-        editor.commit();
+        editor.putString("androidID", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
+        editor.apply();
     }
 
     public String getAndroidID() {
