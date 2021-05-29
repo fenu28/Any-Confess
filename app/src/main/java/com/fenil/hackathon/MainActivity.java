@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     PostRecyclerViewAdapter postRecyclerViewAdapter;
-    ArrayList<Post> posts;
+    public static ArrayList<Post> posts = new ArrayList<>();
     String androidID;
     FloatingActionButton fab;
     public static String timestamp;
@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         apiViewModel.getAllPosts().observe(this, new Observer<ArrayList<Post>>() {
             @Override
             public void onChanged(ArrayList<Post> posts) {
+                MainActivity.posts = posts;
                 postRecyclerViewAdapter.updateList(posts);
                 postRecyclerViewAdapter.notifyDataSetChanged();
                 String newTimestamp = createTimestamp();

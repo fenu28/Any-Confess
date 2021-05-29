@@ -8,6 +8,15 @@ public class Post{
     String id;
     String timestamp;
     List<String> hashtags;
+    List<String> comments;
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
 
     public Post(){
 
@@ -19,6 +28,7 @@ public class Post{
         this.id = id;
         this.timestamp = timestamp;
         this.hashtags = hashtags;
+        this.comments = new ArrayList<>();
     }
 
     public String getId() {
