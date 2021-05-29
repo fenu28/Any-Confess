@@ -13,25 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/post_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="28sp"
-            android:text="Title">
-        </TextView>
-
         <TextView
             android:id="@+id/post_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:textSize="24sp"
-            android:maxLength="500"
-            android:text="Model Text"
-            android:layout_marginTop="8dp">
+            android:maxLength="500">
         </TextView>
 
         <LinearLayout
@@ -41,45 +29,11 @@
             android:layout_marginTop="8dp">
 
             <ImageButton
-                android:id="@+id/post_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_thumb_up_24"
-                android:backgroundTintMode="screen">
-            </ImageButton>
-
-            <TextView
-                android:id="@+id/post_likeCount"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center">
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/post_dislike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_thumb_down_24"
-                android:layout_marginStart="8dp"
-                android:backgroundTintMode="screen">
-            </ImageButton>
-
-            <TextView
-                android:id="@+id/post_dislikeCount"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center">
-            </TextView>
-
-            <ImageButton
                 android:id="@+id/post_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_comment_24"
-                android:backgroundTintMode="screen"
-                android:layout_marginStart="8dp">
+                android:backgroundTintMode="screen">
             </ImageButton>
 
             <TextView

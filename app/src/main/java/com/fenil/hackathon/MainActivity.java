@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Toast.makeText(this,androidID,Toast.LENGTH_SHORT).show();
-        Post post = new Post("How to build an Android App?","This article is a beginning of something very exciting. Keep checking out this space for updates and news");
+        Post post = new Post("This article is a beginning of something very exciting. Keep checking out this space for updates and news");
 
         for(int i = 1;i<=20;i++)
         {

@@ -3,10 +3,7 @@ package com.fenil.hackathon.Model;
 import java.util.ArrayList;
 
 public class Post{
-    String title;
-    String text;
-    int likes;
-    int dislikes;
+    String content;
     int commentCount;
     ArrayList<String> comments;
 
@@ -14,46 +11,27 @@ public class Post{
 
     }
 
-    public Post(String title, String text)
+    public Post(String content)
     {
-        this.title = title;
-        this.text = text;
-        likes = 0;
-        dislikes = 0;
+        this.content = content;
         commentCount = 0;
         comments = new ArrayList<>();
     }
 
-    public String getTitle() {
-        return title;
+    public String getContent() {
+        return content;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getText() {
-        return text;
+    public int getCommentCount() {
+        return commentCount;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
     public ArrayList<String> getComments() {
@@ -62,13 +40,5 @@ public class Post{
 
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount() {
-        this.commentCount = comments.size();
     }
 }

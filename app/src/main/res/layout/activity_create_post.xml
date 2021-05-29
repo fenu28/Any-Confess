@@ -14,22 +14,6 @@
         app:cardCornerRadius="8dp">
 
         <EditText
-            android:id="@+id/title_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="24sp"
-            android:hint="Enter title for your confession">
-        </EditText>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp">
-
-        <EditText
             android:id="@+id/content_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
