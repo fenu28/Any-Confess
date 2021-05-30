@@ -47,5 +47,4 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'com.algolia:algoliasearch-android:3.+'
-
 }

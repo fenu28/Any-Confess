@@ -72,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             saveAndroidID();
-            Toast.makeText(MainActivity.this, getAndroidID(), Toast.LENGTH_LONG).show();
-        } else
-            Toast.makeText(MainActivity.this, getAndroidID(), Toast.LENGTH_SHORT).show();
+        }
 
         timestamp = getTimestamp();
         if (timestamp.equals("null")) {
@@ -101,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
         postRecyclerViewAdapter = new PostRecyclerViewAdapter(this,posts);
         recyclerView.setAdapter(postRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
 
@@ -130,43 +129,15 @@ public class MainActivity extends AppCompatActivity {
                 posts = postsop;
                 postRecyclerViewAdapter.updateList(postsop);
                 postRecyclerViewAdapter.notifyDataSetChanged();
-                String newTimestamp = createTimestamp();
-
-                if (TextUtils.isEmpty(newTimestamp))
-                    newTimestamp = "1970-01-01T14:06Z";
-                updateTimestamp(MainActivity.this, newTimestamp);
+//                String newTimestamp = createTimestamp();
+//
+//                if (TextUtils.isEmpty(newTimestamp))
+//                    newTimestamp = "1970-01-01T14:06Z";
+//                updateTimestamp(MainActivity.this, newTimestamp);
             }
         });
 
         apiViewModel.fetchPostsFromApi();
-
-        searchBar.setOnSearchActionListener(new SearchBar.OnSearchActionListener() {
-            @Override
-            public void onSearchStateChanged(boolean enabled) {
-                String state = enabled ? "enabled" : "disabled";
-                Toast.makeText(getApplicationContext(), "Search bar is " + state, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSearchConfirmed(CharSequence text) {
-                Toast.makeText(getApplicationContext(), "Search query is: " + text, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onButtonClicked(int buttonCode) {
-                switch (buttonCode) {
-                    case SearchBar.BUTTON_BACK:
-                        Toast.makeText(getApplicationContext(), "Back button pressed", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SearchBar.BUTTON_NAVIGATION:
-                        Toast.makeText(getApplicationContext(), "Open Navigation Drawer", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SearchBar.BUTTON_SPEECH:
-                        Toast.makeText(getApplicationContext(), "Start voice recognition module", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
 
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override

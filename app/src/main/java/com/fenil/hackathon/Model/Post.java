@@ -9,6 +9,9 @@ public class Post{
     String timestamp;
     String hashtags;
 
+    public Post() {
+    }
+
     public Post(String content, String id, String timestamp, String hashtags) {
         this.content = content;
         this.id = id;
