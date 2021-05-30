@@ -2,7 +2,6 @@ package com.fenil.hackathon;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,15 +14,26 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.algolia.search.saas.AlgoliaException;
+import com.algolia.search.saas.CompletionHandler;
+import com.algolia.search.saas.Index;
+import com.algolia.search.saas.Query;
 import com.fenil.hackathon.Adapter.PostRecyclerViewAdapter;
 import com.fenil.hackathon.Model.Post;
 import com.fenil.hackathon.ViewModel.ApiViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.harsh.searchwidget.SearchBar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,16 +42,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     PostRecyclerViewAdapter postRecyclerViewAdapter;
-    public static ArrayList<Post> posts = new ArrayList<>();
+    ArrayList<Post> posts;
+    ArrayList<Post> searchedPosts;
     String androidID;
     FloatingActionButton fab;
+    Index index;
+    SearchBar searchBar;
+    private List<String> lastSearches;
     public static String timestamp;
     ApiViewModel apiViewModel;
 
@@ -59,18 +72,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             saveAndroidID();
-            Toast.makeText(MainActivity.this, getAndroidID(), Toast.LENGTH_LONG).show();
-        } else
-            Toast.makeText(MainActivity.this, getAndroidID(), Toast.LENGTH_SHORT).show();
+        }
 
         timestamp = getTimestamp();
         if (timestamp.equals("null")) {
             timestamp = "1970-01-01T14:06Z";
         }
         Log.v("timestamp",timestamp);
+
+        index = (AnyConfessApp.get(this)).getIndex();
         posts = new ArrayList<>();
+        searchedPosts = new ArrayList<>();
         recyclerView = findViewById(R.id.post_recyclerview);
         fab = findViewById(R.id.fab_add);
+        searchBar = findViewById(R.id.search_bar);
         postRecyclerViewAdapter = new PostRecyclerViewAdapter(this, posts);
         apiViewModel = new ViewModelProvider(this).get(ApiViewModel.class);
 
@@ -82,13 +97,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Toast.makeText(this,androidID,Toast.LENGTH_SHORT).show();
-        /*Post post = new Post("This article is a beginning of something very exciting. Keep checking out this space for updates and news");
+        postRecyclerViewAdapter = new PostRecyclerViewAdapter(this,posts);
+        recyclerView.setAdapter(postRecyclerViewAdapter);
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
 
-        for(int i = 1;i<=20;i++)
-        {
-            posts.add(post);
-        }*/
+
         showRecyclerView();
         getPosts();
     }
@@ -110,19 +125,44 @@ public class MainActivity extends AppCompatActivity {
 
         apiViewModel.getAllPosts().observe(this, new Observer<ArrayList<Post>>() {
             @Override
-            public void onChanged(ArrayList<Post> posts) {
-                MainActivity.posts = posts;
-                postRecyclerViewAdapter.updateList(posts);
+            public void onChanged(ArrayList<Post> postsop) {
+                posts = postsop;
+                postRecyclerViewAdapter.updateList(postsop);
                 postRecyclerViewAdapter.notifyDataSetChanged();
-                String newTimestamp = createTimestamp();
-
-                if (TextUtils.isEmpty(newTimestamp))
-                    newTimestamp = "1970-01-01T14:06Z";
-                updateTimestamp(MainActivity.this, newTimestamp);
+//                String newTimestamp = createTimestamp();
+//
+//                if (TextUtils.isEmpty(newTimestamp))
+//                    newTimestamp = "1970-01-01T14:06Z";
+//                updateTimestamp(MainActivity.this, newTimestamp);
             }
         });
 
         apiViewModel.fetchPostsFromApi();
+
+        searchBar.addTextChangeListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()!=0) {
+                    index.searchAsync(new Query(s.toString()),
+                            completionHandler);
+                }
+                else
+                {
+                    postRecyclerViewAdapter.updateList(posts);
+                    postRecyclerViewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private String createTimestamp() {
@@ -192,5 +232,28 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = termsOfService.create();
         alertDialog.show();
     }
+
+    CompletionHandler completionHandler = new CompletionHandler() {
+        @Override
+        public void requestCompleted(JSONObject content, AlgoliaException error) {
+            assert content != null;
+            try {
+                searchedPosts.clear();
+                JSONArray jsonArray = content.getJSONArray("hits");
+                for(int i=0; i< jsonArray.length(); i++)
+                {
+                    JSONObject jsb = jsonArray.getJSONObject(i).getJSONObject("_doc");
+                    searchedPosts.add(new Post(jsb.getString("text"),jsb.getString("_id"),jsb.getString("timestamp"),jsb.get("hashtags").toString()));
+                }
+
+                postRecyclerViewAdapter.updateList(searchedPosts);
+                postRecyclerViewAdapter.notifyDataSetChanged();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    };
 
 }

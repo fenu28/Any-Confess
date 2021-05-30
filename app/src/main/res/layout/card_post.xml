@@ -28,6 +28,18 @@
             android:orientation="horizontal"
             android:layout_marginTop="8dp">
 
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:id="@+id/post_hashtags"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="left">
+
+            </TextView>
+
             <ImageButton
                 android:id="@+id/post_comment"
                 android:layout_width="wrap_content"
@@ -35,14 +47,6 @@
                 android:src="@drawable/ic_baseline_comment_24"
                 android:backgroundTintMode="screen">
             </ImageButton>
-
-            <TextView
-                android:id="@+id/post_commentCount"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center">
-            </TextView>
 
         </LinearLayout>
 

@@ -74,7 +74,7 @@ public class FetchPostsRepo {
                     Log.v("ApiResponseSize",String.valueOf(apiResponse.size()));
                     for(int i=0 ;i < apiResponse.size();i++)
                     {
-                        postList.add(new Post(apiResponse.get(i).getText(),apiResponse.get(i).getId(),apiResponse.get(i).getTimestamp(),apiResponse.get(i).getHashtags()));
+                        postList.add(new Post(apiResponse.get(i).getText(),apiResponse.get(i).getId(),apiResponse.get(i).getTimestamp(),apiResponse.get(i).getHashtags().toString()));
                     }
                     liveContestList.postValue(postList);
                 }

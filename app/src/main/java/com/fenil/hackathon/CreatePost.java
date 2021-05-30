@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +19,6 @@ import com.fenil.hackathon.Model.CreatePostRequest;
 import com.fenil.hackathon.Model.CreatePostResponse;
 import com.fenil.hackathon.ViewModel.ApiViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -81,7 +77,7 @@ public class CreatePost extends AppCompatActivity {
         });
     }
 
-    void CreatePost(String content, String hashtags_string)
+    void CreatePost(String content_text, String hashtags_string)
     {
         Matcher matcher = Pattern.compile("(#[^#\\s]*)")
                 .matcher(hashtags_string);
@@ -91,10 +87,12 @@ public class CreatePost extends AppCompatActivity {
             tags.add(matcher.group());
         }
 
-        apiViewModel.getCreatePostResponse(new CreatePostRequest(getAndroidID(),content,tags)).observe(this, new Observer<CreatePostResponse>() {
+        apiViewModel.getCreatePostResponse(new CreatePostRequest(getAndroidID(),content_text,tags)).observe(this, new Observer<CreatePostResponse>() {
             @Override
             public void onChanged(CreatePostResponse createPostResponse) {
-                Log.e("MSGGGG>>",createPostResponse.getMessage());
+               Toast.makeText(CreatePost.this,createPostResponse.getMessage(),Toast.LENGTH_SHORT).show();
+               content.setText("");
+               hashtags.setText("");
             }
         });
 

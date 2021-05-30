@@ -9,16 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fenil.hackathon.Model.CommentResponse;
 import com.fenil.hackathon.R;
 
 import java.util.ArrayList;
 
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
 
-    ArrayList<String> comments;
+    ArrayList<CommentResponse> comments;
     Context context;
 
-    public CommentRecyclerViewAdapter(Context context, ArrayList<String> comments) {
+    public CommentRecyclerViewAdapter(Context context, ArrayList<CommentResponse> comments) {
         this.comments = comments;
         this.context = context;
     }
@@ -33,7 +34,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
     @Override
     public void onBindViewHolder(@NonNull CommentRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.comment.setText(comments.get(position));
+        holder.comment.setText(comments.get(position).getText());
     }
 
     @Override
@@ -47,5 +48,10 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
             super(itemView);
             comment = itemView.findViewById(R.id.comment_textview);
         }
+    }
+
+    public void updateList(ArrayList<CommentResponse> newlist)
+    {
+        this.comments = newlist;
     }
 }

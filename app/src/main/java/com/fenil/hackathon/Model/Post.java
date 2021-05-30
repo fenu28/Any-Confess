@@ -7,52 +7,16 @@ public class Post{
     String content;
     String id;
     String timestamp;
-    List<String> hashtags;
-    List<String> comments;
+    String hashtags;
 
-    public List<String> getComments() {
-        return comments;
+    public Post() {
     }
 
-    public void setComments(List<String> comments) {
-        this.comments = comments;
-    }
-
-    public Post(){
-
-    }
-
-    public Post(String content,String id,String timestamp,List<String> hashtags)
-    {
+    public Post(String content, String id, String timestamp, String hashtags) {
         this.content = content;
         this.id = id;
         this.timestamp = timestamp;
         this.hashtags = hashtags;
-        this.comments = new ArrayList<>();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public List<String> getHashtags() {
-        return hashtags;
-    }
-
-    public void setHashtags(List<String> hashtags) {
-        this.hashtags = hashtags;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
     public String getContent() {
@@ -63,4 +27,27 @@ public class Post{
         this.content = content;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(String hashtags) {
+        this.hashtags = hashtags;
+    }
 }
